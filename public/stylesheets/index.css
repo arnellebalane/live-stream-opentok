@@ -7,7 +7,7 @@ body {
     margin: 0;
     background-color: #111;
 
-    font-family: "Roboto";
+    font-family: "Roboto Mono";
     font-size: 14px;
     color: #fff;
 }
@@ -81,6 +81,84 @@ video {
 .live-btn.is-live::before {
     background-color: #f44336;
     animation: pulse 500ms ease-in-out infinite alternate;
+}
+
+.archives {
+    width: 300px;
+    height: 720px;
+    padding: 0;
+    margin-left: 24px;
+    list-style: none;
+    overflow: auto;
+}
+
+.archives::before {
+    content: "Archives";
+    display: block;
+    margin-bottom: 24px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.75;
+}
+
+.archives:empty {
+    display: none;
+}
+
+.archive header {
+    display: flex;
+    align-items: baseline;
+}
+
+.archive {
+    border-radius: 3px;
+}
+
+.archive:not(:first-child) {
+    margin-top: 24px;
+}
+
+.archive:not(:last-child) {
+    margin-bottom: 24px;
+}
+
+.archive .name {
+    margin: 0;
+    font-size: 14px;
+}
+
+.archive .download {
+    margin-left: auto;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    opacity: 0.5;
+}
+
+.archive .download:hover,
+.archive .download:focus {
+    text-decoration: underline;
+}
+
+.archive footer {
+    display: flex;
+    margin-top: 4px;
+    opacity: 0.75;
+}
+
+.archive p {
+    margin: 0;
+    font-weight: 300;
+}
+
+.archive .status {
+    margin-right: auto;
+}
+
+.archive .duration {
+    margin-right: 12px;
 }
 
 @keyframes pulse {
