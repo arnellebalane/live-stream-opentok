@@ -6,6 +6,7 @@ const routes = require('auto-load')('routes');
 server(
     routes.broadcasters,
     routes.viewers,
+    routes.archives,
 
     error(ctx => {
         ctx.log.error(ctx.error);
