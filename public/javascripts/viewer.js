@@ -11,7 +11,8 @@
         });
 
         subscriber.on('videoElementCreated', e => {
-            document.body.appendChild(e.element);
+            const wrapper = document.querySelector('.wrapper');
+            wrapper.appendChild(e.element);
         });
     });
 
