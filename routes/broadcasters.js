@@ -11,7 +11,12 @@ async function session(ctx) {
     const id = ctx.params.id;
 
     const response = await new Promise((resolve, reject) => {
-        opentok.createSession((err, session) => {
+        const sessionOptions = {
+            mediaMode: 'routed',
+            archiveMode: 'always'
+        };
+
+        opentok.createSession(sessionOptions, (err, session) => {
             const token = session.generateToken({
                 role: 'publisher',
                 expireTime: (Date.now() / 1000) + (24 * 60 * 60),
