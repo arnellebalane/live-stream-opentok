@@ -11,6 +11,7 @@
   "author": "Arnelle Balane <arnellebalane@gmail.com> (https://arnellebalane.com/)",
   "license": "MIT",
   "dependencies": {
+    "auto-load": "3.0.0",
     "server": "1.1.0-alpha.1"
   },
   "devDependencies": {
