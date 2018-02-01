@@ -1,8 +1,16 @@
 (async () => {
 
-    const sessionEndpoint = window.location.pathname + '/session/';
-    const session = await fetch(sessionEndpoint).then(response => response.json());
+    const sessionInfoEndpoint = window.location.pathname + '/session/';
+    const sessionInfo = await fetch(sessionInfoEndpoint).then(response => response.json());
 
-    console.log(session);
+    const session = OT.initSession(sessionInfo.apiKey, sessionInfo.sessionId);
+    const publisher = OT.initPublisher({
+        insertDefaultUI: false,
+        resolution: '1280x720'
+    });
+
+    publisher.on('videoElementCreated', e => {
+        document.body.appendChild(e.element);
+    });
 
 })();
