@@ -10,9 +10,16 @@ function session(ctx) {
     const id = ctx.params.id;
     const { session } = store.get(id);
 
+    const token = session.generateToken({
+        role: 'subscriber',
+        expireTime: (Date.now() / 1000) + (24 * 60 * 60),
+        data: `user=${id},role=subscriber`
+    });
+
     return json({
         apiKey: process.env.OPENTOK_API_KEY,
-        sessionId: session.sessionId
+        sessionId: session.sessionId,
+        token: token
     });
 }
 
