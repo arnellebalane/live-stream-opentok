@@ -10,5 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "server": "1.1.0-alpha.1"
+  },
+  "devDependencies": {
+    "nodemon": "1.14.11"
   }
 }
