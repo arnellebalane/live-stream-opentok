@@ -1,12 +1,26 @@
 (async () => {
 
     const sessionInfoEndpoint = window.location.pathname + '/session/';
-    const { apiKey, sessionId } = await fetch(sessionInfoEndpoint).then(response => response.json());
+    const { apiKey, sessionId, token } = await fetch(sessionInfoEndpoint).then(response => response.json());
 
     const session = OT.initSession(apiKey, sessionId);
 
     session.on('streamCreated', e => {
-        console.log(e);
+        const subscriber = session.subscribe(e.stream, {
+            insertDefaultUI: false
+        });
+
+        subscriber.on('videoElementCreated', e => {
+            document.body.appendChild(e.element);
+        });
     });
 
+    session.connect(token, handleError);
+
 })();
+
+function handleError(err) {
+    if (err) {
+        console.error(err);
+    }
+}
