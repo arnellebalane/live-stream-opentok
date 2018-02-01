@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "auto-load": "3.0.0",
+    "opentok": "2.6.1",
     "server": "1.1.0-alpha.1"
   },
   "devDependencies": {
