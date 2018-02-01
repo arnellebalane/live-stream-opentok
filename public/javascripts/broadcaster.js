@@ -14,14 +14,26 @@
         wrapper.appendChild(e.element);
     });
 
+    publisher.on('streamDestroyed', e => e.preventDefault());
+
 
     const session = OT.initSession(apiKey, sessionId);
+    session.connect(token, handleError);
 
-    session.connect(token, (err) => {
-        if (err) {
-            return handleError(err);
+
+    const liveBtn = document.querySelector('.live-btn');
+    let isLive = false;
+
+    liveBtn.addEventListener('click', e => {
+        if (isLive) {
+            isLive = false;
+            liveBtn.classList.remove('is-live');
+            session.unpublish(publisher);
+        } else {
+            isLive = true;
+            liveBtn.classList.add('is-live');
+            session.publish(publisher, handleError);
         }
-        session.publish(publisher, handleError);
     });
 
 })();
