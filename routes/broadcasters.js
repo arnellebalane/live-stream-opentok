@@ -1,8 +1,7 @@
 const { get } = require('server/router');
 const { json, render } = require('server/reply');
 const opentok = require('../lib/opentok');
-
-const sessions = {};
+const store = require('../lib/store');
 
 function index(ctx) {
     return render('broadcaster.html');
@@ -18,7 +17,7 @@ async function session(ctx) {
                 expireTime: (Date.now() / 1000) + (24 * 60 * 60),
                 data: `user=${id}`
             });
-            sessions[id] = { session, token };
+            store.set(id, { session, token });
 
             resolve({
                 apiKey: process.env.OPENTOK_API_KEY,
