@@ -1,9 +1,9 @@
 (async () => {
 
     const sessionInfoEndpoint = window.location.pathname + '/session/';
-    const sessionInfo = await fetch(sessionInfoEndpoint).then(response => response.json());
+    const { apiKey, sessionId, token } = await fetch(sessionInfoEndpoint).then(response => response.json());
 
-    const session = OT.initSession(sessionInfo.apiKey, sessionInfo.sessionId);
+
     const publisher = OT.initPublisher({
         insertDefaultUI: false,
         resolution: '1280x720'
@@ -13,4 +13,20 @@
         document.body.appendChild(e.element);
     });
 
+
+    const session = OT.initSession(apiKey, sessionId);
+
+    session.connect(token, (err) => {
+        if (err) {
+            return handleError(err);
+        }
+        session.publish(publisher, handleError);
+    });
+
 })();
+
+function handleError(err) {
+    if (err) {
+        console.error(err);
+    }
+}
