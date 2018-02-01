@@ -1,5 +1,5 @@
 const { get } = require('server/router');
-const { json, render } = require('server/reply');
+const { json, render, status } = require('server/reply');
 const opentok = require('../lib/opentok');
 const store = require('../lib/store');
 
@@ -12,8 +12,7 @@ async function session(ctx) {
 
     const response = await new Promise((resolve, reject) => {
         const sessionOptions = {
-            mediaMode: 'routed',
-            archiveMode: 'always'
+            mediaMode: 'routed'
         };
 
         opentok.createSession(sessionOptions, (err, session) => {
@@ -34,7 +33,36 @@ async function session(ctx) {
     return json(response);
 }
 
+async function start(ctx) {
+    const id = ctx.params.id;
+    const { session } = store.get(id);
+
+    await new Promise((resolve, reject) => {
+        const options = {
+            name: id + ' stream'
+        };
+        opentok.startArchive(session.sessionId, options, (err, archive) => {
+            resolve(archive);
+        });
+    });
+    return status(200);
+}
+
+async function stop(ctx) {
+    const id = ctx.params.id;
+    const { session } = store.get(id);
+
+    await new Promise((resolve, reject) => {
+        opentok.stopArchive(session.sessionId, (err, archive) => {
+            resolve(archive);
+        });
+    });
+    return status(200);
+}
+
 module.exports = [
     get('/broadcaster/:id', index),
-    get('/broadcaster/:id/session', session)
+    get('/broadcaster/:id/session', session),
+    get('/broadcaster/:id/start', start),
+    get('/broadcaster/:id/stop', stop)
 ];
