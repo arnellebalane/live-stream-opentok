@@ -24,14 +24,18 @@
     const liveBtn = document.querySelector('.live-btn');
     let isLive = false;
 
-    liveBtn.addEventListener('click', e => {
+    liveBtn.addEventListener('click', async () => {
         if (isLive) {
             isLive = false;
             liveBtn.classList.remove('is-live');
+
+            await fetch(window.location.pathname + '/stop');
             session.unpublish(publisher);
         } else {
             isLive = true;
             liveBtn.classList.add('is-live');
+
+            await fetch(window.location.pathname + '/start/');
             session.publish(publisher, handleError);
         }
     });
