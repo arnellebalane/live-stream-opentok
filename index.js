@@ -7,7 +7,10 @@ server(
     routes.broadcasters,
     routes.viewers,
 
-    error(ctx => status(500).send(ctx.error.message))
+    error(ctx => {
+        ctx.log.error(ctx.error);
+        return status(500).send(ctx.error.message);
+    })
 ).then(ctx => {
     ctx.log.info(`Server is now running at localhost:${ctx.options.port}`);
 });
