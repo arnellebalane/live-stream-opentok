@@ -38,6 +38,7 @@
             await fetch(window.location.pathname + '/start/');
             session.publish(publisher, handleError);
         }
+        displayArchives();
     });
 
 

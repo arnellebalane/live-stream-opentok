@@ -13,6 +13,8 @@
         subscriber.on('videoElementCreated', e => {
             const wrapper = document.querySelector('.wrapper');
             wrapper.appendChild(e.element);
+
+            displayArchives();
         });
     });
 
